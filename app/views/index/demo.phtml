@@ -1,0 +1,18 @@
+<? $t->block('css') ?>
+<?= $t->css('/css/demo.css'); ?>
+<? $t->end() ?>
+
+
+<? $t->block('title') ?>
+    demo_title
+<? $this->end() ?>
+
+
+<? $this->block('content') ?>
+<?= $demo ?>
+<? $this->end() ?>
+
+
+<? $t->block('js') ?>
+<?= $t->js('/js/demo.js'); ?>
+<? $t->end() ?>

@@ -1,0 +1,18 @@
+<ul class="pagination">
+    <? if ($this->hasFirstLast): ?>
+        <li class=""><a href="<?= $this->url(['p' => 1]) ?>">首页</a></li>
+    <? endif ?>
+    <? for ($page = $this->startPage; $page <= $this->endPage; $page++): ?>
+        <li class="<? if ($this->isCurrent($page)): ?>current<? endif ?>">
+            <a href="<?= $this->url(['p' => $page]) ?>"><?= $page ?></a>
+        </li>
+    <? endfor ?>
+    <? if ($this->hasFirstLast): ?>
+        <li><a href="<?= $this->url(['p' => $this->pageNum()]) ?>">尾页</a></li>
+    <? endif ?>
+    <li>
+        <input id="pager_page_num" type="text" style="width:34px;height:20px;float:left;margin-top:3px;"/>
+        <span id="pager_page_button" class="label" style="margin-left:5px;float:left;">确定</span>
+    </li>
+    <li><span>（共<?= $this->totalNum ?>条，每页<?= $this->pageSize ?>条，共<?= $this->pageNum ?>页）</span></li>
+</ul>

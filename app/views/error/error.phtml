@@ -1,0 +1,8 @@
+<? $this->layout = 'layouts/main' ?>
+<? $this->block('content') ?>
+<center>
+    <h2>出错了</h2>
+    <div><?= $e->getCode() ?> <?= $e->getMessage() ?></div>
+</center>
+<? $this->end() ?>
+
