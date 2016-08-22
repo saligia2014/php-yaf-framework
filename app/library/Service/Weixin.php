@@ -435,6 +435,7 @@ class Weixin extends Service
         if (!empty($user)) {
             $extend = \WxUserExtendModel::getInstance()->find(['wx_user_id' => $user['id']]);
             $user['extend'] = $extend;
+            $user['src'] = 'wx';
         }
         return $user;
     }
