@@ -1,17 +1,29 @@
 <?php
 
 use Lib\WeixinBase;
+use Yaf\Registry;
 
-class TestController extends WeixinBase
+/**
+ * Class LoginController
+ * @desc 推送
+ */
+class ReceiveController extends WeixinBase
 {
     protected function get()
     {
-        echo 'get';
+        $signature = $this->getHttpGetParam('signature');
+        $timestamp = $this->getHttpGetParam('timestamp');
+        $nonce = $this->getHttpGetParam('nonce');
+        if (!Service\Weixin::getInstance()->weixinCheck($signature, $timestamp, $nonce)) {
+            return;
+        }
+
+        Core\RedisQueue::getInstance('main')->push('weixin_event_queue', file_get_contents('php://input'));
     }
 
     protected function post()
     {
-        $this->renderJson($this->getRestfulParam());
+        // TODO: Implement post() method.
     }
 
     protected function put()

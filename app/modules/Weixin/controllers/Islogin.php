@@ -1,17 +1,30 @@
 <?php
 
 use Lib\WeixinBase;
+use Lib\Exception;
+use Yaf\Registry;
+use Service\Weixin;
 
-class TestController extends WeixinBase
+/**
+ * Class LoginController
+ * @desc 登录
+ */
+class IsloginController extends WeixinBase
 {
+
     protected function get()
     {
-        echo 'get';
+        $weixinUser = $this->getUser();
+        if ($weixinUser) {
+            $this->renderJson($weixinUser);
+        } else {
+            $this->renderJson([], Exception::USER_NOT_LOGIN, 'weixin user not login');
+        }
     }
 
     protected function post()
     {
-        $this->renderJson($this->getRestfulParam());
+        // TODO: Implement post() method.
     }
 
     protected function put()
@@ -26,7 +39,7 @@ class TestController extends WeixinBase
 
     protected function options()
     {
-        $this->renderJson(null, ['get']);
+        // TODO: Implement options() method.
     }
 
     protected function head()

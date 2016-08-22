@@ -1,17 +1,26 @@
 <?php
 
 use Lib\WeixinBase;
+use Yaf\Registry;
+use Service\Weixin;
 
-class TestController extends WeixinBase
+/**
+ * Class LoginController
+ * @desc 登录
+ */
+class SignatureController extends WeixinBase
 {
     protected function get()
     {
-        echo 'get';
+        // TODO: Implement get() method.
     }
 
     protected function post()
     {
-        $this->renderJson($this->getRestfulParam());
+        $url = $this->getRestfulParam('url');
+        $result = Weixin::getInstance()->createJsSig($url);
+        $result['appid'] = Weixin::getInstance()->appId;
+        $this->renderJson($result);
     }
 
     protected function put()
@@ -26,7 +35,7 @@ class TestController extends WeixinBase
 
     protected function options()
     {
-        $this->renderJson(null, ['get']);
+        $this->renderJson(null, ['post']);
     }
 
     protected function head()

@@ -2,6 +2,7 @@
 namespace Lib;
 
 use Core\Restful;
+use Service\Weixin;
 
 /**
  * Created by PhpStorm.
@@ -11,5 +12,9 @@ use Core\Restful;
  */
 abstract class WeixinBase extends Restful
 {
-    
+    public function getUser()
+    {
+        $weixinUser = Weixin::getInstance()->current();
+        return $weixinUser;
+    }
 }

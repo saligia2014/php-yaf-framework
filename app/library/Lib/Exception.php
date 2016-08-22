@@ -23,4 +23,9 @@ class Exception extends \Yaf\Exception
     const SERVER_ERROR = 10001;
 
     const MISS_PARAM = 10002;
+
+    /**
+     * weixin
+     */
+    const USER_NOT_LOGIN = 11000;
 }

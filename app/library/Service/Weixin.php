@@ -275,7 +275,7 @@ class Weixin extends Service
         }
 
         if ($id) {
-            $result = \WxUserModel::getInstance()->findById($id);
+            $this->getUser($id);
         }
 
         return $result;
@@ -427,5 +427,15 @@ class Weixin extends Service
         $wxUserExtend['state'] = \WxUserExtendModel::STATE_NORMAL;
 
         \WxUserExtendModel::getInstance()->update($wxUserExtend, $where);
+    }
+
+    public function getUser($id)
+    {
+        $user = \WxUserModel::getInstance()->findById($id);
+        if (!empty($user)) {
+            $extend = \WxUserExtendModel::getInstance()->find(['wx_user_id' => $user['id']]);
+            $user['extend'] = $extend;
+        }
+        return $user;
     }
 }

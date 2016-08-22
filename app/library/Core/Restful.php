@@ -3,6 +3,8 @@ namespace Core;
 
 use Yaf;
 use Yaf\Application;
+use Yaf\Registry;
+
 
 abstract class Restful extends \Yaf\Controller_Abstract
 {
@@ -27,8 +29,8 @@ abstract class Restful extends \Yaf\Controller_Abstract
     public function indexAction()
     {
         $requestMethod = strtolower($this->getRequest()->getMethod());
-        $requestApiVersion = $_SERVER['HTTP_JIAOCHENG_API_VERSION'];
-        $serverApiVersion = Application::app()->getConfig()->get('version');
+        $requestApiVersion = isset($_SERVER['HTTP_JIAOCHENG_API_VERSION']) ? $_SERVER['HTTP_JIAOCHENG_API_VERSION'] : null;
+        $serverApiVersion = Registry::get('conf')->version;
         $requestAction = $requestMethod . $requestApiVersion;
 
         if (!method_exists($this, $requestAction) || $requestApiVersion != $serverApiVersion) {
@@ -44,10 +46,14 @@ abstract class Restful extends \Yaf\Controller_Abstract
         return $val ? $val : $default;
     }
 
-    public function getRestfulParam($key, $default = null)
+    public function getRestfulParam($key = null, $default = null)
     {
         $restfulParam = json_decode(file_get_contents('php://input'), true);
-        return $restfulParam[$key] ? $restfulParam[$key] : $default;
+        if ($key) {
+            return $restfulParam[$key] ? $restfulParam[$key] : $default;
+        } else {
+            return $restfulParam ? $restfulParam : $default;
+        }
     }
 
     public function getHttpGetParam($key, $default = null)
@@ -60,7 +66,7 @@ abstract class Restful extends \Yaf\Controller_Abstract
         return $_POST[$key] ? $_POST[$key] : $default;
     }
 
-    public function renderJson($dict = null, $list = null, $code = 0, $msg = '')
+    public function renderJson($dict = null, $list = null, $code = 0, $msg = 'ok')
     {
         $json = [
             'code' => $code,
@@ -95,6 +101,6 @@ abstract class Restful extends \Yaf\Controller_Abstract
 
     public function referer()
     {
-        return trim($_SERVER['HTTP_REFERER']);
+        return isset($_SERVER['HTTP_REFERER']) ? trim($_SERVER['HTTP_REFERER']) : null;
     }
 }
