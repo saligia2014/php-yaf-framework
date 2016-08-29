@@ -1,0 +1,20 @@
+{
+  "name": "saligia/jiaocheng",
+  "authors": [
+    {
+      "name": "saligia",
+      "email": "i@saligia.com"
+    }
+  ],
+  "require": {
+    "qiniu/php-sdk": "^7.0",
+    "phpmailer/phpmailer": "^5.2",
+    "pingplusplus/pingpp-php": "dev-master"
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
+    }
+  }
+}
