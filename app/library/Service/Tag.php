@@ -40,11 +40,17 @@ class Tag extends Service
         if (!$tag) {
             $data['tag_name'] = $tagName;
             $data['tutorial_num'] = 0;
+            $data['state'] = \TagModel::STATE_NORMAL;
             $tagId = \TagModel::getInstance()->insert($data);
         } else {
             $tagId = $tag['id'];
         }
         return $tagId;
+    }
+
+    public function del($tagId)
+    {
+        \TagModel::getInstance()->update(['state' => \TagModel::STATE_DEL], ['id' => $tagId]);
     }
 
     public function tutorialNum($tagId)
@@ -56,5 +62,12 @@ class Tag extends Service
         }
 
         return $num;
+    }
+
+    public function search($tagName)
+    {
+        $tags = \TagModel::getInstance()->findAll(['name' => ['like' => $tagName], 'state' => \TagModel::STATE_NORMAL]);
+
+        return $tags;
     }
 }
